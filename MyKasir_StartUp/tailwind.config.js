@@ -13,9 +13,9 @@ export default {
     theme: {
         extend: {
             colors: {
-                primary: '#1CB93D',       /* Hijau Utama */
+                primary: '#00796b',       /* Hijau Utama */
                 primaryHover: '#169932',
-                secondary: '#F3C931',     /* Kuning Aksen */
+                secondary: '#d4a017',     /* Kuning Aksen */
                 darkText: '#1A1A1A',      /* Teks Heading */
                 bodyText: '#4A4A4A',      /* Teks Body */
                 surface: '#FFFFFF',
@@ -24,6 +24,7 @@ export default {
             fontFamily: {
                 sans: ['Quicksand', ...defaultTheme.fontFamily.sans],
                 logo: ['"Aguafina Script"', 'cursive'],
+                script: ['"Aguafina Script"', 'cursive'],
                 serif: ['Adamina', ...defaultTheme.fontFamily.serif],
             },
         },

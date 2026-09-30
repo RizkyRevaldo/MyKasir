@@ -150,7 +150,7 @@ export default function Welcome({ auth }) {
                                             <div className="flex h-8 w-8 items-center justify-center rounded bg-primary text-white">
                                                 <i className="fas fa-store text-sm"></i>
                                             </div>
-                                            <span className="font-bold text-darkText">Toko Laris Manis</span>
+                                            <span className="font-bold text-darkText">Unpam Store</span>
                                         </div>
                                         <div className="flex space-x-2">
                                             <div className="h-3 w-3 rounded-full bg-red-400"></div>
