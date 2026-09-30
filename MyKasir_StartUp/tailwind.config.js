@@ -12,8 +12,19 @@ export default {
 
     theme: {
         extend: {
+            colors: {
+                primary: '#1CB93D',       /* Hijau Utama */
+                primaryHover: '#169932',
+                secondary: '#F3C931',     /* Kuning Aksen */
+                darkText: '#1A1A1A',      /* Teks Heading */
+                bodyText: '#4A4A4A',      /* Teks Body */
+                surface: '#FFFFFF',
+                background: '#FAFAFA',
+            },
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                script: ['"Aguafina Script"', 'cursive'],
+                serif: ['Adamina', ...defaultTheme.fontFamily.serif],
             },
         },
     },

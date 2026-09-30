@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+    scroll-behavior: smooth;
+
+}
+
+.btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(28, 185, 61, 0.2);
+}
+
+.btn-large:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(28, 185, 61, 0.3);
+}
