@@ -412,7 +412,7 @@ export default function Welcome({ auth }) {
                         <div className="mb-8 flex flex-col items-center justify-between md:flex-row">
                             <div className="mb-6 flex items-baseline space-x-1 md:mb-0">
                                 <span className="-mb-2 font-script text-4xl font-normal text-primary">My</span>
-                                <span className="font-sans text-3xl font-extrabold text-secondary">Kasirs</span>
+                                <span className="font-sans text-3xl font-extrabold text-secondary">Kasir</span>
                             </div>
 
                             <div className="flex space-x-6 text-lg font-bold text-gray-600">

@@ -22,8 +22,8 @@ export default {
                 background: '#FAFAFA',
             },
             fontFamily: {
-                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
-                script: ['"Aguafina Script"', 'cursive'],
+                sans: ['Quicksand', ...defaultTheme.fontFamily.sans],
+                logo: ['"Aguafina Script"', 'cursive'],
                 serif: ['Adamina', ...defaultTheme.fontFamily.serif],
             },
         },
