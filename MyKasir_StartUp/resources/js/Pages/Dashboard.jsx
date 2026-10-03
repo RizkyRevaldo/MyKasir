@@ -1,20 +1,56 @@
 import React, { useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
 
-// Sample Data Produk (Bisa diganti dengan data dari Laravel DB)
+// Data Produk Menggunakan Gambar Lokal
 const initialProducts = [
-    { id: 1, name: "Indomie Goreng", price: 3500, emoji: "🍜", bg: "bg-orange-100", text: "text-orange-600" },
-    { id: 2, name: "Indomie Kuah Ayam", price: 3000, emoji: "🍲", bg: "bg-yellow-100", text: "text-yellow-600" },
-    { id: 3, name: "Kopi ABC Sachet", price: 1500, emoji: "☕", bg: "bg-amber-100", text: "text-amber-800" },
-    { id: 4, name: "Telur Ayam 1kg", price: 28000, emoji: "🥚", bg: "bg-orange-50", text: "text-orange-400" },
-    { id: 5, name: "Beras Pandan 5kg", price: 75000, emoji: "🍚", bg: "bg-gray-100", text: "text-gray-600" },
-    { id: 6, name: "Minyak Goreng 2L", price: 32000, emoji: "🛢️", bg: "bg-yellow-50", text: "text-yellow-600" },
-    { id: 7, name: "Sabun Mandi Cair", price: 18000, emoji: "🧼", bg: "bg-blue-100", text: "text-blue-500" },
-    { id: 8, name: "Gula Pasir 1kg", price: 15000, emoji: "🧊", bg: "bg-slate-100", text: "text-slate-500" },
-    { id: 9, name: "Teh Pucuk Harum", price: 3500, emoji: "🥤", bg: "bg-green-100", text: "text-green-600" },
-    { id: 10, name: "Roti Tawar", price: 12000, emoji: "🍞", bg: "bg-amber-100", text: "text-amber-600" },
-    { id: 11, name: "Susu Kental Manis", price: 11000, emoji: "🥛", bg: "bg-blue-50", text: "text-blue-400" },
-    { id: 12, name: "Tepung Terigu 1kg", price: 10000, emoji: "🌾", bg: "bg-yellow-100", text: "text-yellow-700" }
+    { 
+        id: 1, 
+        name: "Indomie Kuah Ayam", 
+        price: 3000, 
+        image: "/images/indomie-kuah.jpg" 
+    },
+    { 
+        id: 2, 
+        name: "Gula Pasir 1kg", 
+        price: 15000, 
+        image: "/images/gula.jpg" 
+    },
+    { 
+        id: 3, 
+        name: "Minyak Goreng 2L", 
+        price: 32000, 
+        image: "/images/minyak.jpg" 
+    },
+    { 
+        id: 4, 
+        name: "Telur Ayam 1kg", 
+        price: 28000, 
+        image: "/images/telur.jpg" 
+    },
+    { 
+        id: 5, 
+        name: "Sabun Mandi Cair", 
+        price: 18000, 
+        image: "/images/sabun-cair.jpg" 
+    },
+    { 
+        id: 6,
+        name: "Beras 1 Kg",
+        price:12000,
+        image: "/images/beras.jpg"
+    },
+    {
+        id: 7,
+        name: "Kopi Susu",
+        price: 2500,
+        image: "/images/kopi-susu.jpg"
+    },
+    {
+        id: 8,
+        name: "Indomie Goreng Spesial",
+        price: 3500,
+        image: "/images/IndomieGorengSpesial.jpg"
+    },
 ];
 
 export default function Dashboard({ auth }) {
@@ -34,7 +70,7 @@ export default function Dashboard({ auth }) {
         }).format(number);
     };
 
-    // Filter Produk berdasarkan keyword pencarian
+    // Filter Produk Berdasarkan Kata Kunci Pencarian
     const filteredProducts = initialProducts.filter(product =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -105,19 +141,19 @@ export default function Dashboard({ auth }) {
 
                     {/* Navigation */}
                     <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2">
-                        <Link href={route('dashboard')} className="flex items-center space-x-3 px-4 py-3 bg-primary text-white shadow-md shadow-primary/20 font-semibold">
+                        <Link href={route('dashboard')} className="flex items-center space-x-3 px-4 py-3 bg-primary text-white rounded-xl shadow-md shadow-primary/20 font-semibold">
                             <i className="fas fa-cash-register w-5 text-center"></i>
                             <span>Kasir (POS)</span>
                         </Link>
-                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary transition-all font-semibold">
+                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary rounded-xl transition-all font-semibold">
                             <i className="fas fa-box w-5 text-center"></i>
                             <span>Produk</span>
                         </a>
-                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary transition-all font-semibold">
+                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary rounded-xl transition-all font-semibold">
                             <i className="fas fa-boxes-stacked w-5 text-center"></i>
                             <span>Stok</span>
                         </a>
-                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary transition-all font-semibold">
+                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary rounded-xl transition-all font-semibold">
                             <i className="fas fa-chart-pie w-5 text-center"></i>
                             <span>Laporan</span>
                         </a>
@@ -171,20 +207,25 @@ export default function Dashboard({ auth }) {
                     </header>
 
                     {/* Product Grid */}
-                    <div className="flex overflow-y-auto p-8 bg-gray-50">
+                    <div className="flex-1 overflow-y-auto p-8 bg-gray-50">
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             {filteredProducts.map((product) => (
-                                <div key={product.id} className="bg-white p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-primary/30 transition-all flex flex-col h-full group">
-                                    <div className={`w-full aspect-square ${product.bg} ${product.text} rounded-xl flex items-center justify-center text-6xl mb-4 group-hover:scale-105 transition-transform duration-300`}>
-                                        {product.emoji}
+                                <div key={product.id} className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-primary/30 transition-all flex flex-col h-full group">
+                                    {/* Wrapper Gambar Produk */}
+                                    <div className="w-full aspect-square rounded-xl overflow-hidden mb-4 bg-gray-50 flex items-center justify-center p-2 border border-gray-100">
+                                        <img 
+                                            src={product.image} 
+                                            alt={product.name} 
+                                            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                                        />
                                     </div>
                                     <div className="flex-1">
                                         <h3 className="font-bold text-gray-800 text-lg leading-tight mb-1">{product.name}</h3>
-                                        <p className="text-primary font-bold">{formatRupiah(product.price)}</p>
+                                        <p className="text-primary font-extrabold">{formatRupiah(product.price)}</p>
                                     </div>
                                     <button 
                                         onClick={() => addToCart(product)} 
-                                        className="mt-4 w-full py-2.5 border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-colors flex justify-center items-center space-x-2"
+                                        className="mt-4 w-full py-2.5 rounded-xl border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-colors flex justify-center items-center space-x-2"
                                     >
                                         <i className="fas fa-plus"></i>
                                         <span>Tambah</span>
@@ -198,7 +239,7 @@ export default function Dashboard({ auth }) {
                 {/* RIGHT SIDEBAR (CART & PAYMENT) */}
                 <aside className="w-[28rem] bg-white border-l border-gray-100 flex flex-col shadow-sm z-10 flex-shrink-0">
                     <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-                        <h2 class="text-xl font-bold">Detail Pesanan</h2>
+                        <h2 className="text-xl font-bold">Detail Pesanan</h2>
                         <button onClick={clearCart} className="text-red-500 hover:text-red-700 text-sm font-semibold flex items-center space-x-1 bg-red-50 px-3 py-1.5 rounded-lg transition-colors">
                             <i className="fas fa-trash-alt"></i> <span>Kosongkan</span>
                         </button>
@@ -215,9 +256,11 @@ export default function Dashboard({ auth }) {
                             cart.map((item) => (
                                 <div key={item.id} className="bg-white border border-gray-100 rounded-xl p-3 flex justify-between items-center shadow-sm">
                                     <div className="flex items-center space-x-3 flex-1 min-w-0">
-                                        <div className={`w-12 h-12 rounded-lg ${item.bg} ${item.text} flex items-center justify-center text-2xl flex-shrink-0`}>
-                                            {item.emoji}
-                                        </div>
+                                        <img 
+                                            src={item.image} 
+                                            alt={item.name} 
+                                            className="w-12 h-12 rounded-lg object-contain bg-gray-50 p-1 border border-gray-100 flex-shrink-0"
+                                        />
                                         <div className="truncate pr-2">
                                             <h4 className="font-bold text-sm truncate">{item.name}</h4>
                                             <p className="text-primary font-bold text-xs">{formatRupiah(item.price)}</p>
@@ -290,7 +333,7 @@ export default function Dashboard({ auth }) {
                 {/* SUCCESS MODAL */}
                 {isSuccessModalOpen && (
                     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                        <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl flex flex-col items-center text-center animate-in fade-in zoom-in duration-200">
+                        <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl flex flex-col items-center text-center">
                             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-md">
                                 <i className="fas fa-check text-4xl text-primary"></i>
                             </div>

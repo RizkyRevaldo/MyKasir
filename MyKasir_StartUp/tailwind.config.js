@@ -13,8 +13,8 @@ export default {
     theme: {
         extend: {
             colors: {
-                primary: '#00796b',       /* Hijau Utama */
-                primaryHover: '#169932',
+                primary: '#1cb93d',       /* Hijau Utama */
+                primaryHover: '#f3c931',
                 secondary: '#d4a017',     /* Kuning Aksen */
                 darkText: '#1A1A1A',      /* Teks Heading */
                 bodyText: '#4A4A4A',      /* Teks Body */
