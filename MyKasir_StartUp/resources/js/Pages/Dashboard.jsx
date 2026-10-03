@@ -1,56 +1,15 @@
 import React, { useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
 
-// Data Produk Menggunakan Gambar Lokal
 const initialProducts = [
-    { 
-        id: 1, 
-        name: "Indomie Kuah Ayam", 
-        price: 3000, 
-        image: "/images/indomie-kuah.jpg" 
-    },
-    { 
-        id: 2, 
-        name: "Gula Pasir 1kg", 
-        price: 15000, 
-        image: "/images/gula.jpg" 
-    },
-    { 
-        id: 3, 
-        name: "Minyak Goreng 2L", 
-        price: 32000, 
-        image: "/images/minyak.jpg" 
-    },
-    { 
-        id: 4, 
-        name: "Telur Ayam 1kg", 
-        price: 28000, 
-        image: "/images/telur.jpg" 
-    },
-    { 
-        id: 5, 
-        name: "Sabun Mandi Cair", 
-        price: 18000, 
-        image: "/images/sabun-cair.jpg" 
-    },
-    { 
-        id: 6,
-        name: "Beras 1 Kg",
-        price: 12000,
-        image: "/images/beras.jpg"
-    },
-    {
-        id: 7,
-        name: "Kopi Susu",
-        price: 2500,
-        image: "/images/kopi-susu.jpg"
-    },
-    {
-        id: 8,
-        name: "Indomie Goreng Spesial",
-        price: 3500,
-        image: "/images/IndomieGorengSpesial.jpg"
-    },
+    { id: 1, name: "Indomie Kuah Ayam", price: 3000, image: "/images/indomie-kuah.jpg" },
+    { id: 2, name: "Gula Pasir 1kg", price: 15000, image: "/images/gula.jpg" },
+    { id: 3, name: "Minyak Goreng 2L", price: 32000, image: "/images/minyak.jpg" },
+    { id: 4, name: "Telur Ayam 1kg", price: 28000, image: "/images/telur.jpg" },
+    { id: 5, name: "Sabun Mandi Cair", price: 18000, image: "/images/sabun-cair.jpg" },
+    { id: 6, name: "Beras 1 Kg", price: 12000, image: "/images/beras.jpg" },
+    { id: 7, name: "Kopi Susu", price: 2500, image: "/images/kopi-susu.jpg" },
+    { id: 8, name: "Indomie Goreng Spesial", price: 3500, image: "/images/IndomieGorengSpesial.jpg" },
 ];
 
 export default function Dashboard({ auth }) {
@@ -59,23 +18,21 @@ export default function Dashboard({ auth }) {
     const [cashPaid, setCashPaid] = useState('');
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
     const [lastChangeAmount, setLastChangeAmount] = useState(0);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
-    // Format Rupiah Helper
     const formatRupiah = (number) => {
         return new Intl.NumberFormat('id-ID', {
             style: 'currency',
             currency: 'IDR',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
+            minimumFractionDigits: 0
         }).format(number);
     };
 
-    // Filter Produk Berdasarkan Kata Kunci Pencarian
     const filteredProducts = initialProducts.filter(product =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    // Cart Actions
     const addToCart = (product) => {
         setCart(prevCart => {
             const existingItem = prevCart.find(item => item.id === product.id);
@@ -105,17 +62,17 @@ export default function Dashboard({ auth }) {
         setCashPaid('');
     };
 
-    // Calculation Logic
     const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
     const numericCashPaid = parseFloat(cashPaid) || 0;
     const changeAmount = numericCashPaid - totalAmount;
     const isPaymentValid = cart.length > 0 && numericCashPaid >= totalAmount;
 
-    // Handle Payment
     const handleProcessPayment = () => {
         if (isPaymentValid) {
             setLastChangeAmount(changeAmount);
             setIsSuccessModalOpen(true);
+            setIsCartOpen(false);
         }
     };
 
@@ -128,18 +85,30 @@ export default function Dashboard({ auth }) {
         <>
             <Head title="Kasir (POS) - MyKasir" />
 
-            <div className="bg-gray-50 font-sans text-gray-800 h-screen overflow-hidden flex">
+            <div className="bg-gray-50 font-sans text-gray-800 h-screen overflow-hidden flex flex-col md:flex-row">
+                {/* OVERLAY MOBILE SIDEBAR */}
+                {isSidebarOpen && (
+                    <div 
+                        className="fixed inset-0 bg-black/50 z-40 md:hidden"
+                        onClick={() => setIsSidebarOpen(false)}
+                    ></div>
+                )}
+
                 {/* LEFT SIDEBAR */}
-                <aside className="w-64 bg-white border-r border-gray-100 flex flex-col shadow-sm z-10 flex-shrink-0">
-                    <div className="h-24 flex flex-col justify-center px-6 border-b border-gray-100">
-                        <div className="flex items-baseline space-x-1">
-                            <span className="font-logo text-primary text-5xl tracking-tight -mb-2">My</span>
-                            <span className="font-bold text-amber-400 text-3xl">Kasir</span>
+                <aside className={`fixed md:static inset-y-0 left-0 w-64 bg-white border-r border-gray-100 flex flex-col shadow-sm z-50 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-200 flex-shrink-0`}>
+                    <div className="h-20 md:h-24 flex items-center justify-between px-6 border-b border-gray-100">
+                        <div className="flex flex-col justify-center">
+                            <div className="flex items-baseline space-x-1">
+                                <span className="font-logo text-primary text-4xl md:text-5xl tracking-tight -mb-2">My</span>
+                                <span className="font-bold text-amber-400 text-2xl md:text-3xl">Kasir</span>
+                            </div>
+                            <span className="text-[10px] font-semibold text-gray-400 mt-1">Solusi praktis kasir Anda.</span>
                         </div>
-                        <span className="text-[10px] font-semibold text-gray-400 mt-1 ml-1">Solusi praktis kasir Anda.</span>
+                        <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-gray-400 hover:text-gray-600">
+                            <i className="fas fa-times text-xl"></i>
+                        </button>
                     </div>
 
-                    {/* Navigation */}
                     <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2">
                         <Link href="/dashboard" className="flex items-center space-x-3 px-4 py-3 bg-primary text-white shadow-md shadow-primary/20 font-semibold">
                             <i className="fas fa-cash-register w-5 text-center"></i>
@@ -153,7 +122,7 @@ export default function Dashboard({ auth }) {
                             <i className="fas fa-boxes-stacked w-5 text-center"></i>
                             <span>Stok</span>
                         </a>
-                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary  transition-all font-semibold">
+                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary transition-all font-semibold">
                             <i className="fas fa-chart-pie w-5 text-center"></i>
                             <span>Laporan</span>
                         </a>
@@ -163,7 +132,6 @@ export default function Dashboard({ auth }) {
                         </Link>
                     </nav>
 
-                    {/* User Profile Info */}
                     <div className="p-4 border-t border-gray-100">
                         <div className="flex items-center justify-between px-3 py-2 bg-gray-50 rounded-xl">
                             <div className="flex items-center space-x-3 truncate">
@@ -184,35 +152,39 @@ export default function Dashboard({ auth }) {
 
                 {/* MAIN CONTENT AREA */}
                 <main className="flex-1 flex flex-col h-screen overflow-hidden">
-                    {/* Header */}
-                    <header className="h-24 bg-white border-b border-gray-100 flex items-center justify-between px-8 shadow-sm z-10 flex-shrink-0">
-                        <div>
-                            <h1 className="text-2xl font-bold">Daftar Produk</h1>
-                            <p className="text-sm text-gray-400">Pilih produk atau cari barang</p>
+                    <header className="h-20 md:h-24 bg-white border-b border-gray-100 flex items-center justify-between px-4 md:px-8 shadow-sm z-10 flex-shrink-0 gap-2">
+                        <div className="flex items-center space-x-3">
+                            <button 
+                                onClick={() => setIsSidebarOpen(true)}
+                                className="md:hidden p-2 text-gray-600 hover:text-primary focus:outline-none"
+                            >
+                                <i className="fas fa-bars text-xl"></i>
+                            </button>
+                            <div>
+                                <h1 className="text-lg md:text-2xl font-bold">Daftar Produk</h1>
+                                <p className="text-xs md:text-sm text-gray-400 hidden sm:block">Pilih produk atau cari barang</p>
+                            </div>
                         </div>
                         
-                        {/* Search Bar */}
-                        <div className="relative w-96">
-                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i className="fas fa-search text-gray-400"></i>
+                        <div className="relative flex-1 max-w-xs md:max-w-md">
+                            <div className="absolute inset-y-0 left-0 pl-3 md:pl-4 flex items-center pointer-events-none">
+                                <i className="fas fa-search text-gray-400 text-sm"></i>
                             </div>
                             <input 
                                 type="text" 
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                placeholder="Cari nama produk..." 
-                                className="w-full bg-gray-50 border border-gray-200 text-gray-800 rounded-full py-2.5 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all font-medium"
+                                placeholder="Cari produk..." 
+                                className="w-full bg-gray-50 border border-gray-200 text-gray-800 rounded-full py-2 pl-9 pr-3 md:py-2.5 md:pl-11 md:pr-4 focus:outline-none focus:ring-2 focus:ring-primary/50 text-xs md:text-sm font-medium"
                             />
                         </div>
                     </header>
 
-                    {/* Product Grid */}
-                    <div className="flex-1 overflow-y-auto p-8 bg-gray-50">
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div className="flex-1 overflow-y-auto p-4 md:p-8 bg-gray-50 pb-24 md:pb-8">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
                             {filteredProducts.map((product) => (
-                                <div key={product.id} className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-primary/30 transition-all flex flex-col h-full group">
-                                    {/* Wrapper Gambar Produk */}
-                                    <div className="w-full aspect-square rounded-xl overflow-hidden mb-4 bg-gray-50 flex items-center justify-center p-2 border border-gray-100">
+                                <div key={product.id} className="bg-white rounded-2xl p-3 md:p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-primary/30 transition-all flex flex-col h-full group">
+                                    <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 md:mb-4 bg-gray-50 flex items-center justify-center p-2 border border-gray-100">
                                         <img 
                                             src={product.image} 
                                             alt={product.name} 
@@ -220,37 +192,63 @@ export default function Dashboard({ auth }) {
                                         />
                                     </div>
                                     <div className="flex-1">
-                                        <h3 className="font-bold text-gray-800 text-lg leading-tight mb-1">{product.name}</h3>
-                                        <p className="text-primary font-extrabold">{formatRupiah(product.price)}</p>
+                                        <h3 className="font-bold text-gray-800 text-xs md:text-lg leading-tight mb-1 line-clamp-2">{product.name}</h3>
+                                        <p className="text-primary font-extrabold text-xs md:text-base">{formatRupiah(product.price)}</p>
                                     </div>
                                     <button 
                                         onClick={() => addToCart(product)} 
-                                        className="mt-4 w-full py-2.5 rounded-xl border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-colors flex justify-center items-center space-x-2"
+                                        className="mt-2 md:mt-4 w-full py-2 md:py-2.5 rounded-xl border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-colors flex justify-center items-center space-x-1 md:space-x-2 text-xs md:text-sm"
                                     >
-                                        <i className="fas fa-plus"></i>
+                                        <i className="fas fa-plus text-xs"></i>
                                         <span>Tambah</span>
                                     </button>
                                 </div>
                             ))}
                         </div>
                     </div>
+
+                    {/* BAR KASIR RINGKASAN KHUSUS MOBILE (Floating Bottom Bar) */}
+                    <div className="md:hidden fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 p-3 flex justify-between items-center z-30 shadow-lg">
+                        <div>
+                            <p className="text-xs text-gray-500 font-semibold">{totalQty} Item Pesanan</p>
+                            <p className="text-base font-bold text-primary">{formatRupiah(totalAmount)}</p>
+                        </div>
+                        <button 
+                            onClick={() => setIsCartOpen(true)}
+                            className="bg-primary text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-md shadow-primary/20 flex items-center space-x-2"
+                        >
+                            <i className="fas fa-shopping-basket"></i>
+                            <span>Lihat Pesanan</span>
+                        </button>
+                    </div>
                 </main>
 
                 {/* RIGHT SIDEBAR (CART & PAYMENT) */}
-                <aside className="w-[28rem] bg-white border-l border-gray-100 flex flex-col shadow-sm z-10 flex-shrink-0">
-                    <div className="p-6 border-b border-gray-100 flex justify-between items-center">
-                        <h2 className="text-xl font-bold">Detail Pesanan</h2>
-                        <button onClick={clearCart} className="text-red-500 hover:text-red-700 text-sm font-semibold flex items-center space-x-1 bg-red-50 px-3 py-1.5 rounded-lg transition-colors">
+                {isCartOpen && (
+                    <div 
+                        className="fixed inset-0 bg-black/50 z-40 md:hidden"
+                        onClick={() => setIsCartOpen(false)}
+                    ></div>
+                )}
+
+                <aside className={`fixed md:static inset-y-0 right-0 w-full sm:w-96 md:w-[28rem] bg-white border-l border-gray-100 flex flex-col shadow-lg md:shadow-sm z-50 transform ${isCartOpen ? 'translate-x-0' : 'translate-x-full'} md:translate-x-0 transition-transform duration-200 flex-shrink-0`}>
+                    <div className="p-4 md:p-6 border-b border-gray-100 flex justify-between items-center">
+                        <div className="flex items-center space-x-2">
+                            <button onClick={() => setIsCartOpen(false)} className="md:hidden text-gray-400 hover:text-gray-600 mr-2">
+                                <i className="fas fa-arrow-left text-lg"></i>
+                            </button>
+                            <h2 className="text-lg md:text-xl font-bold">Detail Pesanan</h2>
+                        </div>
+                        <button onClick={clearCart} className="text-red-500 hover:text-red-700 text-xs md:text-sm font-semibold flex items-center space-x-1 bg-red-50 px-3 py-1.5 rounded-lg transition-colors">
                             <i className="fas fa-trash-alt"></i> <span>Kosongkan</span>
                         </button>
                     </div>
 
-                    {/* Cart Items List */}
-                    <div className="flex-1 overflow-y-auto p-6 space-y-4">
+                    <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-3 md:space-y-4">
                         {cart.length === 0 ? (
-                            <div className="h-full flex flex-col items-center justify-center text-gray-400 space-y-3">
-                                <i className="fas fa-shopping-basket text-5xl text-gray-200"></i>
-                                <p className="font-medium">Belum ada pesanan</p>
+                            <div className="h-full flex flex-col items-center justify-center text-gray-400 space-y-3 py-12">
+                                <i className="fas fa-shopping-basket text-4xl md:text-5xl text-gray-200"></i>
+                                <p className="font-medium text-sm">Belum ada pesanan</p>
                             </div>
                         ) : (
                             cart.map((item) => (
@@ -259,20 +257,20 @@ export default function Dashboard({ auth }) {
                                         <img 
                                             src={item.image} 
                                             alt={item.name} 
-                                            className="w-12 h-12 rounded-lg object-contain bg-gray-50 p-1 border border-gray-100 flex-shrink-0"
+                                            className="w-10 h-10 md:w-12 md:h-12 rounded-lg object-contain bg-gray-50 p-1 border border-gray-100 flex-shrink-0"
                                         />
                                         <div className="truncate pr-2">
-                                            <h4 className="font-bold text-sm truncate">{item.name}</h4>
+                                            <h4 className="font-bold text-xs md:text-sm truncate">{item.name}</h4>
                                             <p className="text-primary font-bold text-xs">{formatRupiah(item.price)}</p>
                                         </div>
                                     </div>
                                     
                                     <div className="flex items-center bg-gray-50 rounded-lg border border-gray-200 flex-shrink-0">
-                                        <button onClick={() => updateQty(item.id, -1)} className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-red-500 transition-colors rounded-l-lg hover:bg-gray-200">
+                                        <button onClick={() => updateQty(item.id, -1)} className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center text-gray-500 hover:text-red-500 transition-colors rounded-l-lg hover:bg-gray-200">
                                             <i className="fas fa-minus text-xs"></i>
                                         </button>
-                                        <span className="w-8 text-center font-bold text-sm">{item.qty}</span>
-                                        <button onClick={() => updateQty(item.id, 1)} className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-primary transition-colors rounded-r-lg hover:bg-gray-200">
+                                        <span className="w-7 md:w-8 text-center font-bold text-xs md:text-sm">{item.qty}</span>
+                                        <button onClick={() => updateQty(item.id, 1)} className="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center text-gray-500 hover:text-primary transition-colors rounded-r-lg hover:bg-gray-200">
                                             <i className="fas fa-plus text-xs"></i>
                                         </button>
                                     </div>
@@ -281,34 +279,31 @@ export default function Dashboard({ auth }) {
                         )}
                     </div>
 
-                    {/* Payment Section */}
-                    <div className="bg-gray-50 border-t border-gray-200 p-6 flex-shrink-0">
-                        <div className="flex justify-between items-center mb-4">
-                            <span className="text-gray-500 font-semibold text-lg">Total Tagihan</span>
-                            <span className="text-2xl font-bold text-gray-800">{formatRupiah(totalAmount)}</span>
+                    <div className="bg-gray-50 border-t border-gray-200 p-4 md:p-6 flex-shrink-0">
+                        <div className="flex justify-between items-center mb-3 md:mb-4">
+                            <span className="text-gray-500 font-semibold text-sm md:text-lg">Total Tagihan</span>
+                            <span className="text-xl md:text-2xl font-bold text-gray-800">{formatRupiah(totalAmount)}</span>
                         </div>
 
-                        {/* Input Cash */}
-                        <div className="mb-4">
-                            <label className="block text-sm font-bold text-gray-800 mb-2">Uang Bayar (Tunai)</label>
+                        <div className="mb-3 md:mb-4">
+                            <label className="block text-xs md:text-sm font-bold text-gray-800 mb-1 md:mb-2">Uang Bayar (Tunai)</label>
                             <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <span className="text-gray-500 font-bold">Rp</span>
+                                <div className="absolute inset-y-0 left-0 pl-3 md:pl-4 flex items-center pointer-events-none">
+                                    <span className="text-gray-500 font-bold text-sm">Rp</span>
                                 </div>
                                 <input 
                                     type="number" 
                                     value={cashPaid}
                                     onChange={(e) => setCashPaid(e.target.value)}
                                     placeholder="0" 
-                                    className="w-full bg-white border-2 border-gray-200 rounded-xl py-3 pl-12 pr-4 text-xl font-bold text-gray-800 focus:outline-none focus:ring-0 focus:border-primary transition-all"
+                                    className="w-full bg-white border-2 border-gray-200 rounded-xl py-2.5 pl-10 pr-3 md:py-3 md:pl-12 md:pr-4 text-lg md:text-xl font-bold text-gray-800 focus:outline-none focus:ring-0 focus:border-primary"
                                 />
                             </div>
                         </div>
 
-                        {/* Change Display */}
-                        <div className="flex justify-between items-center mb-6 bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
-                            <span className="text-gray-500 font-semibold">Kembalian</span>
-                            <span className={`text-xl font-bold ${
+                        <div className="flex justify-between items-center mb-4 md:mb-6 bg-white p-3 md:p-4 rounded-xl border border-gray-100 shadow-sm">
+                            <span className="text-gray-500 font-semibold text-xs md:text-base">Kembalian</span>
+                            <span className={`text-base md:text-xl font-bold ${
                                 cart.length === 0 || !cashPaid ? 'text-gray-400' :
                                 changeAmount < 0 ? 'text-red-500' : 'text-primary'
                             }`}>
@@ -318,11 +313,10 @@ export default function Dashboard({ auth }) {
                             </span>
                         </div>
 
-                        {/* Pay Button */}
                         <button 
                             onClick={handleProcessPayment}
                             disabled={!isPaymentValid}
-                            className="w-full bg-primary hover:bg-primaryHover text-white py-4 rounded-xl font-bold text-lg shadow-lg shadow-primary/30 transition-all flex justify-center items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full bg-primary hover:bg-primaryHover text-white py-3 md:py-4 rounded-xl font-bold text-base md:text-lg shadow-lg shadow-primary/30 transition-all flex justify-center items-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             <i className="fas fa-check-circle"></i>
                             <span>BAYAR SEKARANG</span>
@@ -333,19 +327,19 @@ export default function Dashboard({ auth }) {
                 {/* SUCCESS MODAL */}
                 {isSuccessModalOpen && (
                     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                        <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl flex flex-col items-center text-center">
-                            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-md">
-                                <i className="fas fa-check text-4xl text-primary"></i>
+                        <div className="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl flex flex-col items-center text-center">
+                            <div className="w-16 h-16 md:w-20 md:h-20 bg-green-100 rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-md">
+                                <i className="fas fa-check text-3xl md:text-4xl text-primary"></i>
                             </div>
-                            <h3 className="text-2xl font-bold text-gray-800 mb-2">Pembayaran Berhasil!</h3>
-                            <p className="text-gray-500 mb-6">Transaksi telah dicatat ke dalam sistem.</p>
+                            <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-1 md:mb-2">Pembayaran Berhasil!</h3>
+                            <p className="text-xs md:text-sm text-gray-500 mb-6">Transaksi telah dicatat ke dalam sistem.</p>
                             
-                            <div className="w-full bg-gray-50 rounded-xl p-4 mb-6 flex justify-between items-center border border-gray-100">
+                            <div className="w-full bg-gray-50 rounded-xl p-3 md:p-4 mb-6 flex justify-between items-center border border-gray-100 text-sm">
                                 <span className="font-semibold text-gray-500">Kembalian:</span>
-                                <span className="text-xl font-bold text-primary">{formatRupiah(lastChangeAmount)}</span>
+                                <span className="text-lg md:text-xl font-bold text-primary">{formatRupiah(lastChangeAmount)}</span>
                             </div>
 
-                            <button onClick={handleCloseModal} className="w-full bg-primary text-white py-3 rounded-xl font-bold hover:bg-primaryHover transition-colors">
+                            <button onClick={handleCloseModal} className="w-full bg-primary text-white py-3 rounded-xl font-bold hover:bg-primaryHover transition-colors text-sm md:text-base">
                                 Pesanan Baru
                             </button>
                         </div>

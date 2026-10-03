@@ -26,7 +26,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/produk', function () {
         return Inertia::render('Produk');
     })->name('produk');
+
+    Route::get('/stok', function () {
+        return Inertia::render('Stok');
+    })->name('stok');
+    
 });
+
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
