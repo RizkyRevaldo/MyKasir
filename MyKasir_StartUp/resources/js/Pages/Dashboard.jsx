@@ -36,7 +36,7 @@ const initialProducts = [
     { 
         id: 6,
         name: "Beras 1 Kg",
-        price:12000,
+        price: 12000,
         image: "/images/beras.jpg"
     },
     {
@@ -141,23 +141,23 @@ export default function Dashboard({ auth }) {
 
                     {/* Navigation */}
                     <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2">
-                        <Link href={route('dashboard')} className="flex items-center space-x-3 px-4 py-3 bg-primary text-white rounded-xl shadow-md shadow-primary/20 font-semibold">
+                        <Link href="/dashboard" className="flex items-center space-x-3 px-4 py-3 bg-primary text-white shadow-md shadow-primary/20 font-semibold">
                             <i className="fas fa-cash-register w-5 text-center"></i>
                             <span>Kasir (POS)</span>
                         </Link>
-                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary rounded-xl transition-all font-semibold">
+                        <Link href="/produk" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary transition-all font-semibold">
                             <i className="fas fa-box w-5 text-center"></i>
                             <span>Produk</span>
-                        </a>
-                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary rounded-xl transition-all font-semibold">
+                        </Link>
+                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary transition-all font-semibold">
                             <i className="fas fa-boxes-stacked w-5 text-center"></i>
                             <span>Stok</span>
                         </a>
-                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary rounded-xl transition-all font-semibold">
+                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary  transition-all font-semibold">
                             <i className="fas fa-chart-pie w-5 text-center"></i>
                             <span>Laporan</span>
                         </a>
-                        <Link href={route('profile.edit')} className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary rounded-xl transition-all font-semibold">
+                        <Link href="/profile" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary transition-all font-semibold">
                             <i className="fas fa-cog w-5 text-center"></i>
                             <span>Pengaturan</span>
                         </Link>
@@ -175,7 +175,7 @@ export default function Dashboard({ auth }) {
                                     <p className="text-xs text-gray-400">Admin Kasir</p>
                                 </div>
                             </div>
-                            <Link href={route('logout')} method="post" as="button" className="text-gray-400 hover:text-red-500 p-2">
+                            <Link href="/logout" method="post" as="button" className="text-gray-400 hover:text-red-500 p-2">
                                 <i className="fas fa-sign-out-alt"></i>
                             </Link>
                         </div>

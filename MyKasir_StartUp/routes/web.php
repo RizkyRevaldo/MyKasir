@@ -5,6 +5,29 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+// Halaman Utama (Landing Page KasirKu)
+Route::get('/', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
+
+// Fitur yang Wajib Login (Dashboard POS & Kelola Produk)
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Halaman Kasir (POS)
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+
+    // Halaman Kelola Produk
+    Route::get('/produk', function () {
+        return Inertia::render('Produk');
+    })->name('produk');
+});
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
