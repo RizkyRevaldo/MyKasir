@@ -100,10 +100,10 @@ export default function Stok({ auth }) {
                             <i className="fas fa-boxes-stacked w-5 text-center"></i>
                             <span>Stok</span>
                         </Link>
-                        <a href="#" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary  transition-all font-semibold">
+                        <Link href="/laporan" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary rounded-xl transition-all font-semibold">
                             <i className="fas fa-chart-pie w-5 text-center"></i>
                             <span>Laporan</span>
-                        </a>
+                            </Link>
                         <Link href="/profile" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary transition-all font-semibold">
                             <i className="fas fa-cog w-5 text-center"></i>
                             <span>Pengaturan</span>

@@ -30,6 +30,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/stok', function () {
         return Inertia::render('Stok');
     })->name('stok');
+
+    // Route Halaman Laporan Baru
+    Route::get('/laporan', function () {
+        return Inertia::render('Laporan');
+    })->name('laporan');
     
 });
 
