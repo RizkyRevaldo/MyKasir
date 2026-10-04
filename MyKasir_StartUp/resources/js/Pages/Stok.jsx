@@ -74,18 +74,18 @@ export default function Stok({ auth }) {
 
                 {/* LEFT SIDEBAR */}
                 <aside className={`fixed md:static inset-y-0 left-0 w-64 bg-white border-r border-gray-100 flex flex-col shadow-sm z-50 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-200 flex-shrink-0`}>
-                    <div className="h-20 md:h-24 flex items-center justify-between px-6 border-b border-gray-100">
-                        <div className="flex flex-col justify-center">
-                            <div className="flex items-baseline space-x-1">
-                                <span className="font-logo text-primary text-4xl md:text-5xl tracking-tight -mb-2">My</span>
-                                <span className="font-bold text-amber-400 text-2xl md:text-3xl">Kasir</span>
-                            </div>
-                            <span className="text-[10px] font-semibold text-gray-400 mt-1">Solusi praktis kasir Anda.</span>
-                        </div>
+                   <div className="h-20 md:h-24 flex items-center justify-between px-4 border-b border-gray-100">
+                        <Link href="/dashboard" className="flex items-center">
+                            <img 
+                                src="/images/mykasir.png" 
+                                alt="MyKasir Logo" 
+                                className="h-12 md:h-14 w-auto object-contain"
+                            />
+                        </Link>
                         <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-gray-400 hover:text-gray-600">
                             <i className="fas fa-times text-xl"></i>
                         </button>
-                    </div>
+                        </div>
 
                     <nav className="flex-1 overflow-y-auto py-6 px-4 space-y-2">
                         <Link href="/dashboard" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary transition-all font-semibold">
@@ -102,7 +102,7 @@ export default function Stok({ auth }) {
                         </Link>
                         <Link href="/laporan" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary rounded-xl transition-all font-semibold">
                             <i className="fas fa-chart-pie w-5 text-center"></i>
-                            <span>Laporan</span>
+                             <span>Laporan</span>
                             </Link>
                         <Link href="/profile" className="flex items-center space-x-3 px-4 py-3 text-gray-500 hover:bg-green-50 hover:text-primary transition-all font-semibold">
                             <i className="fas fa-cog w-5 text-center"></i>

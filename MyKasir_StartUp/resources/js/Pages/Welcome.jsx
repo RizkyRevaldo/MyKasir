@@ -13,19 +13,19 @@ export default function Welcome({ auth }) {
                 <nav className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 backdrop-blur-md shadow-sm">
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div className="flex h-24 items-center justify-between">
-                            {/* Logo Section */}
-                            <div
-                                className="flex cursor-pointer flex-col justify-center"
-                                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                            >
-                                <div className="flex items-baseline space-x-1">
-                                    <span className="-mb-2 font-script text-5xl font-normal text-primary">My</span>
-                                    <span className="font-sans text-4xl font-extrabold text-secondary">Kasir</span>
-                                </div>
-                                <span className="mt-1 pl-1 font-serif text-xs tracking-wide text-gray-500">
-                                    Solusi praktis kasir Anda.
-                                </span>
-                            </div>
+                {/* Logo Section */}
+                <div className="h-20 md:h-24 flex items-center justify-between px-4 border-b border-gray-100">
+                    <Link href="/dashboard" className="flex items-center">
+                        <img 
+                            src="/images/mykasir.png" 
+                            alt="MyKasir Logo" 
+                            className="h-12 md:h-14 w-auto object-contain"
+                        />
+                    </Link>
+                    <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-gray-400 hover:text-gray-600">
+                        <i className="fas fa-times text-xl"></i>
+                    </button>
+                </div>
 
                             {/* Desktop Menu */}
                             <div className="hidden items-center space-x-8 md:flex">
