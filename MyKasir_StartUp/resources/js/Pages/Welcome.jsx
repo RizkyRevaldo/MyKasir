@@ -22,9 +22,6 @@ export default function Welcome({ auth }) {
                             className="h-12 md:h-14 w-auto object-contain"
                         />
                     </Link>
-                    <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-gray-400 hover:text-gray-600">
-                        <i className="fas fa-times text-xl"></i>
-                    </button>
                 </div>
 
                             {/* Desktop Menu */}
