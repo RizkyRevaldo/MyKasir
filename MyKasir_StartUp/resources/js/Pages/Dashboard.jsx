@@ -183,7 +183,7 @@ export default function Dashboard({ auth }) {
                     <div className="flex-1 overflow-y-auto p-4 md:p-8 bg-gray-50 pb-24 md:pb-8">
                         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
                             {filteredProducts.map((product) => (
-                                <div key={product.id} className="bg-white rounded-2xl p-3 md:p-4 shadow-sm border border-gray-100 hover:shadow-md hover:border-primary/30 transition-all flex flex-col h-full group">
+                                <div key={product.id} className="bg-white p-2 md:p-3 shadow-sm border border-gray-100 hover:shadow-md hover:border-primary/30 transition-all flex flex-col h-full group">
                                     <div className="w-full aspect-square rounded-xl overflow-hidden mb-2 md:mb-4 bg-gray-50 flex items-center justify-center p-2 border border-gray-100">
                                         <img 
                                             src={product.image} 
@@ -192,8 +192,8 @@ export default function Dashboard({ auth }) {
                                         />
                                     </div>
                                     <div className="flex-1">
-                                        <h3 className="font-bold text-gray-800 text-xs md:text-lg leading-tight mb-1 line-clamp-2">{product.name}</h3>
-                                        <p className="text-primary font-extrabold text-xs md:text-base">{formatRupiah(product.price)}</p>
+                                        <h3 className="font-medium text-gray-800 text-xs md:text-lg leading-tight mb-1 line-clamp-2">{product.name}</h3>
+                                        <p className="text-primary font-bold text-xs md:text-base">{formatRupiah(product.price)}</p>
                                     </div>
                                     <button 
                                         onClick={() => addToCart(product)} 
